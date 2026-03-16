@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Products } from './componets/Products'
+import { Header } from './componets/Header'
 import { products as initialProducts } from './mocks/products.json'
 
 
@@ -24,7 +25,8 @@ function App( ) {
   return (
     <>
     <h1>Tienda</h1>
-        <Products products={filteredProducts}/>
+    <Header/>
+    <Products products={filteredProducts}/>
     </>
   )
 }

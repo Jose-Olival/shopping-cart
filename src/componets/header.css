@@ -1,0 +1,23 @@
+.filters {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  font-size: 14px;
+  font-weight: 700;
+  gap: 1rem;
+}
+
+.filters > div {
+  display: flex;
+
+  gap: 1rem;
+}
+
+.filters input[type="range"]::-moz-range-progress {
+  background-color: #84f; 
+  height: .4rem;
+}
+.filters input[type="range"]::-moz-range-track {  
+  background-color: #efe;
+}
