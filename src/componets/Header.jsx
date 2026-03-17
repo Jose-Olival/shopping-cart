@@ -1,9 +1,13 @@
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import './header.css'
 
-export function Header () {
+export function Header ( ) {
   const [minPrice, setMinPrice] = useState(0)
   const [maxPrice, setMaxPrice] = useState(1001)
+
+  const minPriceFieldId = useId()
+  const maxPriceFIeldId = useId()
+  const categoryFieldId = useId()
 
   const handleChangeMinPrice = (event) => {
     setMinPrice(Number(event.target.value)) 
@@ -17,18 +21,18 @@ export function Header () {
     <header>
       <section className='filters'>
         <div>
-          <label htmlFor='minPrice'>precio minimo</label>
-          <input type='range' value={minPrice} id='minPrice' min='0' max={maxPrice} onChange={handleChangeMinPrice}/>
+          <label htmlFor={minPriceFieldId}>precio minimo</label>
+          <input type='range' value={minPrice} id={minPriceFieldId} min='0' max={maxPrice} onChange={handleChangeMinPrice}/>
           <span>${minPrice}</span>
         </div>
         <div>
-          <label htmlFor='maxPrice'>precio maximo</label>
-          <input type='range' value={maxPrice} id='maxPrice' min={minPrice} max='1001' onChange={handleChangeMaxPrice}/>
+          <label htmlFor={maxPriceFIeldId}>precio maximo</label>
+          <input type='range' value={maxPrice} id={maxPriceFIeldId} min={minPrice} max='1001' onChange={handleChangeMaxPrice}/>
           <span>${maxPrice === 1001 ? 'cualquiera': maxPrice}</span>
         </div>
         <div>
-          <label htmlFor='category'>Categorias</label>
-          <select id='category'> 
+          <label htmlFor={categoryFieldId}>Categorias</label>
+          <select id={categoryFieldId}> 
             <option value='all'>Todas</option>  
             <option value='beauty'>Belleza</option>    
             <option value='fragrances'>Perfumes</option>    
