@@ -4,7 +4,6 @@ import { useCart } from '../hooks/useCart'
 
 export function Products ({ products }) {
   const {addToCart} = useCart()
-  console.log(addToCart)
 
   return (
     <main className='products'>

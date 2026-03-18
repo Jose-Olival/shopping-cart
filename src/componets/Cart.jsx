@@ -4,7 +4,7 @@ import { ClearCartIcon, RemoveFromCartIcon, CartIcon } from "./Icons";
 import { useCart } from '../hooks/useCart';
 
 export function Cart () {
-  const { cart } = useCart()
+  const { cart, addToCart, clearCart } = useCart()
   const cartCheckboxId = useId()
 
   return (
@@ -26,15 +26,15 @@ export function Cart () {
 
                 <footer>
                   <small>Cantidad: {item.quantity}</small>
-                  <button>+</button>
+                  <button onClick={e => addToCart(item)}>+</button>
                 </footer>
               </li>
             ))
           }
         </ul>
 
-        <button>
-          <ClearCartIcon />
+        <button onClick={clearCart}>
+          <ClearCartIcon/>
         </button>
       </aside>
     </>
