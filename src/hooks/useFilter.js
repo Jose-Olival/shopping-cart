@@ -1,25 +1,24 @@
-import { products as initialProducts } from './mocks/products.json'
+import { useContext } from 'react'
+import { FilterContext } from '../context/filter'
 
-export function useFilter ({ products }) {
-  const [filter, setFilter] = useState({
-    category: 'all',
-    minPrice: 0,
-    maxPrice: -1
-  })
+export function useFilter ( ) {
+  const {filter, setFilter} = useContext(FilterContext)
 
   const changeFilter = ({key, value}) => {
-
+    setFilter(prevFilter => {
+      const newFilter = {...prevFilter}
+      newFilter[key] = value
+      return newFilter
+    })
   }
 
   const productsFilter = (products) => {
     return products.filter((product) => {
       return filter.minPrice <= product.price &&
-      (filter.maxPrice === -1 || filter.maxPrice >= product.price ) &&
+      filter.maxPrice >= product.price &&
       (filter.category === 'all' || filter.category === product.category )
     })
   }
 
-  const filteredProducts = productsFilter(products)
-
-  return { products: filteredProducts, changeFilter}
+  return { productsFilter, filter, changeFilter}
 }

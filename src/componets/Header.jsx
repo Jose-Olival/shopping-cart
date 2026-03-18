@@ -1,20 +1,24 @@
-import { useId, useState } from 'react'
+import { useId } from 'react'
 import './header.css'
+import { useFilter } from '../hooks/useFilter'
 
 export function Header ( ) {
-  const [minPrice, setMinPrice] = useState(0)
-  const [maxPrice, setMaxPrice] = useState(1001)
+  const { filter, changeFilter } = useFilter()
 
   const minPriceFieldId = useId()
   const maxPriceFIeldId = useId()
   const categoryFieldId = useId()
 
   const handleChangeMinPrice = (event) => {
-    setMinPrice(Number(event.target.value)) 
+    changeFilter({key: 'minPrice', value: Number(event.target.value)}) 
   }
 
   const handleChangeMaxPrice = (event) => {
-    setMaxPrice(Number(event.target.value))
+    changeFilter({key: 'maxPrice', value: Number(event.target.value)}) 
+  }
+
+  const handleChangeCategory = (event) => {
+    changeFilter({key: 'category', value: event.target.value}) 
   }
 
   return (
@@ -22,17 +26,17 @@ export function Header ( ) {
       <section className='filters'>
         <div>
           <label htmlFor={minPriceFieldId}>precio minimo</label>
-          <input type='range' value={minPrice} id={minPriceFieldId} min='0' max={maxPrice} onChange={handleChangeMinPrice}/>
-          <span>${minPrice}</span>
+          <input type='range' value={filter.minPrice} id={minPriceFieldId} min='0' max={filter.maxPrice} onChange={handleChangeMinPrice}/>
+          <span>${filter.minPrice}</span>
         </div>
         <div>
           <label htmlFor={maxPriceFIeldId}>precio maximo</label>
-          <input type='range' value={maxPrice} id={maxPriceFIeldId} min={minPrice} max='1001' onChange={handleChangeMaxPrice}/>
-          <span>${maxPrice === 1001 ? 'cualquiera': maxPrice}</span>
+          <input type='range' value={filter.maxPrice} id={maxPriceFIeldId} min={filter.minPrice} max='301' onChange={handleChangeMaxPrice}/>
+          <span>${filter.maxPrice === 301 ? 'cualquiera': filter.maxPrice}</span>
         </div>
         <div>
           <label htmlFor={categoryFieldId}>Categorias</label>
-          <select id={categoryFieldId}> 
+          <select id={categoryFieldId} value={filter.category} onChange={handleChangeCategory}> 
             <option value='all'>Todas</option>  
             <option value='beauty'>Belleza</option>    
             <option value='fragrances'>Perfumes</option>    
