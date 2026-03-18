@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Products } from './componets/Products'
 import { Header } from './componets/Header'
 import { useFilter } from './hooks/useFilter'
