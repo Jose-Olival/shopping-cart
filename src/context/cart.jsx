@@ -6,6 +6,7 @@ export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([])
 
   const addToCart = (product) => {
+    console.log(product)
     const productInCartIndex = cart.findIndex(item => item.id === product.id)
     const newCart = structuredClone(cart)
     if (productInCartIndex >= 0){

@@ -1,8 +1,10 @@
 import './Cart.css'
 import { useId } from "react";
 import { ClearCartIcon, RemoveFromCartIcon, CartIcon } from "./Icons";
+import { useCart } from '../hooks/useCart';
 
 export function Cart () {
+  const { cart } = useCart()
   const cartCheckboxId = useId()
 
   return (
@@ -14,17 +16,21 @@ export function Cart () {
 
       <aside className="cart">
         <ul>
-          <li>
-            <img src="https://cdn.dummyjson.com/product-images/groceries/kiwi/thumbnail.webp" alt="kiwi" />
-            <div>
-              <h4>Kiwi</h4> - 2$
-            </div>
+          {
+            cart.map(item => (
+              <li key={item.id}>
+                <img src={item.thumbnail} alt={item.title} />
+                <div>
+                  <h4>{item.title}</h4> - {item.price}$
+                </div>
 
-            <footer>
-              <small>Cantidad: 1</small>
-              <button>+</button>
-            </footer>
-          </li>
+                <footer>
+                  <small>Cantidad: {item.quantity}</small>
+                  <button>+</button>
+                </footer>
+              </li>
+            ))
+          }
         </ul>
 
         <button>
