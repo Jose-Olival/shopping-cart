@@ -21,12 +21,20 @@ export const CartProvider = ({ children }) => {
     setCart(prevState => prevState.filter(item => item.id !== product.id))
   } 
 
+  const reduceQuantity = (product) => {
+    const productInCartIndex = cart.findIndex(item => item.id === product.id)
+    if (productInCartIndex === -1) return
+    const newCart = structuredClone(cart) 
+    newCart[productInCartIndex].quantity -= 1
+    setCart(newCart)
+  }
+
   const clearCart = () => {
     setCart([])
   }
 
   return (
-    <cartContext.Provider value={{cart, addToCart, clearCart, removeFromCart}} >
+    <cartContext.Provider value={{cart, addToCart, clearCart, removeFromCart, reduceQuantity}} >
       {children}
     </cartContext.Provider>
   )
