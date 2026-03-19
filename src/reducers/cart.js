@@ -1,4 +1,9 @@
-export const initialState = []
+
+export const initialState = JSON.parse(window.localStorage.getItem('cart')) || []
+
+const updateLocalStorage = (state) => {
+  localStorage.setItem('cart', JSON.stringify(state))
+}
 
 export const CART_ACTION_TYPES = {
   ADD_TO_CART:'ADD_TO_CART',
@@ -40,6 +45,6 @@ export const reducerCart = (state, action ) => {
   const { type } = action
   const updateState = UPDATE_STATE_BY_ACTION[type] 
   const newState = updateState ? updateState(state, action) : state
-  //update local storage
+  updateLocalStorage(newState)
   return newState
 }
