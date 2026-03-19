@@ -1,40 +1,50 @@
-import { createContext, useState } from "react";
+import { createContext, useReducer, useState } from "react";
+import { reducerCart, initialState } from "../reducers/cart";
 
 export const cartContext = createContext()
 
-export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([])
+function useCartReducer () {
+  const [state, dispatch] = useReducer(reducerCart, initialState)
 
   const addToCart = (product) => {
-    const productInCartIndex = cart.findIndex(item => item.id === product.id)
-    const newCart = structuredClone(cart)
-    if (productInCartIndex >= 0){
-      newCart[productInCartIndex].quantity += 1
-    }else {
-      product.quantity = 1
-      newCart.push(product)
-    }
-    setCart(newCart)
+    dispatch({
+      type: 'ADD_TO_CART',
+      playload: product
+    })
   }
 
   const removeFromCart = (product) => {
-    setCart(prevState => prevState.filter(item => item.id !== product.id))
+    dispatch({
+      type: 'REMOVE_FROM_CART',
+      playload: product
+    })
   } 
 
   const reduceQuantity = (product) => {
-    const productInCartIndex = cart.findIndex(item => item.id === product.id)
-    if (productInCartIndex === -1) return
-    const newCart = structuredClone(cart) 
-    newCart[productInCartIndex].quantity -= 1
-    setCart(newCart)
+    dispatch({
+      type: 'REDUCE_QUANTITY',
+      playload: product
+    })
   }
 
   const clearCart = () => {
-    setCart([])
+    dispatch({ type: 'CLEAR_CART' })
   }
 
+  return {state, addToCart, clearCart, removeFromCart, reduceQuantity }
+}
+
+export const CartProvider = ({ children }) => {
+  const {state, addToCart, clearCart, removeFromCart, reduceQuantity } = useCartReducer()
+
   return (
-    <cartContext.Provider value={{cart, addToCart, clearCart, removeFromCart, reduceQuantity}} >
+    <cartContext.Provider value={{
+      cart: state, 
+      addToCart, 
+      clearCart, 
+      removeFromCart, 
+      reduceQuantity
+    }} >
       {children}
     </cartContext.Provider>
   )
